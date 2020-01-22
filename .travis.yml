@@ -10,9 +10,9 @@ before_install:
 stages:
   - name: styling
   - name: test
-  - name: release
-    if: ((branch = master AND type = push) OR (tag IS present)) AND NOT fork
-#  - name: multi-jvm-test
+  #- name: release
+#    if: ((branch = master AND type = push) OR (tag IS present)) AND NOT fork
+  - name: multi-jvm-test
 
 jobs:
   include:
@@ -26,8 +26,8 @@ jobs:
       script: sbt ci-release
 
 # TODO Super slow and flaky on Travis :/
-#    - stage: multi-jvm-test
-#      script: sbt multi-jvm:test
+    - stage: multi-jvm-test
+      script: sbt multi-jvm:test
 
 cache:
   directories:
