@@ -6,3 +6,8 @@ addSbtPlugin("org.scoverage"    % "sbt-scoverage"   % "1.6.1")
 addSbtPlugin("org.wartremover"  % "sbt-wartremover" % "2.4.3")
 addSbtPlugin("com.jsuereth"     % "sbt-pgp"         % "2.0.1")
 addSbtPlugin("com.geirsson"     % "sbt-ci-release"  % "1.5.0")
+addSbtPlugin("com.thesamet"     % "sbt-protoc"      % "0.99.27")
+
+libraryDependencies ++= Seq(
+  "com.thesamet.scalapb" %% "compilerplugin" % "0.9.4"
+)

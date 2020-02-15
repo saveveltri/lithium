@@ -21,7 +21,7 @@ lazy val publishSettings = Seq(
       url("https://github.com/DennisVDB")
     )
   )
-)
+) ++ PublishSettings.settings
 
 lazy val scalacOptionsOnly212 = Seq("-Ypartial-unification", "-Xfuture", "-Yno-adapted-args")
 scalacOptions ++=
@@ -128,6 +128,12 @@ libraryDependencies ++= Seq(
   "eu.timepit"                 %% "refined-scalacheck"        % refinedScalacheckVersion   % Test
 )
 
+//protobuf
+libraryDependencies ++= Seq(
+//  "com.thesamet.scalapb" %% "compilerplugin" % protocVersion,
+  "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf"
+)
+
 addCompilerPlugin(("org.typelevel" % "kind-projector" % kindProjectorVersion).cross(CrossVersion.full))
 
 addCompilerPlugin("com.olegpy" %% "better-monadic-for" % betterMonadicForVersion)
@@ -138,6 +144,9 @@ lazy val root = (project in file("."))
   .settings(multiJvmSettings: _*)
   .settings(parallelExecution in Test := false)
   .settings(crossScalaVersions := supportedScalaVersions)
+  .settings(PB.targets in Compile := Seq(
+    scalapb.gen() -> (sourceManaged in Compile).value
+  ))
   .settings(publishSettings)
 
 scalafmtOnCompile := true
