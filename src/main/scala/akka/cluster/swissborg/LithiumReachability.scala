@@ -2,7 +2,7 @@ package akka.cluster.swissborg
 
 import akka.cluster._
 
-trait LithiumReachability {
+sealed trait LithiumReachability {
   def observersGroupedByUnreachable: Map[UniqueAddress, Set[UniqueAddress]]
 
   def allUnreachable: Set[UniqueAddress]
@@ -31,13 +31,12 @@ final case class LithiumReachabilityFromAkka(r: Reachability) extends LithiumRea
   override def remove(nodes: Set[UniqueAddress]): LithiumReachability = LithiumReachabilityFromAkka(r.remove(nodes))
 }
 
-/*
-final case class TestLithiumReachability(reachableNodes: Set[UniqueAddress],
-                                         observersGroupedByUnreachable0: Map[UniqueAddress, Set[UniqueAddress]])
+final case class LithiumReachabilityFromNodes(reachableNodes: Set[UniqueAddress],
+                                              observersGroupedByUnreachableIn: Map[UniqueAddress, Set[UniqueAddress]])
     extends LithiumReachability {
 
   override def observersGroupedByUnreachable: Map[UniqueAddress, Set[UniqueAddress]] =
-    observersGroupedByUnreachable0
+    observersGroupedByUnreachableIn
 
   override def allUnreachable: Set[UniqueAddress] = observersGroupedByUnreachable.keySet
 
@@ -46,7 +45,7 @@ final case class TestLithiumReachability(reachableNodes: Set[UniqueAddress],
   override def isReachable(node: UniqueAddress): Boolean = reachableNodes.contains(node)
 
   override def remove(nodes: Set[UniqueAddress]): LithiumReachability =
-    LithiumReachability(
+    LithiumReachabilityFromNodes(
       reachableNodes.diff(nodes),
       observersGroupedByUnreachable.flatMap {
         case (unreachable, observers) =>
@@ -58,15 +57,14 @@ final case class TestLithiumReachability(reachableNodes: Set[UniqueAddress],
           }
       }
     )
-}*/
+}
 
 object LithiumReachability {
 
   def fromReachability(r: Reachability): LithiumReachability = LithiumReachabilityFromAkka(r)
 
-  /*
   // Used for testing
   def apply(reachableNodes: Set[UniqueAddress],
             observersGroupedByUnreachable0: Map[UniqueAddress, Set[UniqueAddress]]): LithiumReachability =
-    TestLithiumReachability(reachableNodes, observersGroupedByUnreachable0)*/
+    LithiumReachabilityFromNodes(reachableNodes, observersGroupedByUnreachable0)
 }

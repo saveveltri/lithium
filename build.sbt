@@ -130,7 +130,6 @@ libraryDependencies ++= Seq(
 
 //protobuf
 libraryDependencies ++= Seq(
-//  "com.thesamet.scalapb" %% "compilerplugin" % protocVersion,
   "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf"
 )
 

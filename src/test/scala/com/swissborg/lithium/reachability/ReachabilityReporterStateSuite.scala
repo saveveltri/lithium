@@ -6,7 +6,7 @@ import akka.actor.Address
 import akka.cluster.ClusterEvent.CurrentClusterState
 import akka.cluster.MemberStatus.Up
 import akka.cluster.UniqueAddress
-import akka.cluster.swissborg.TestMember
+import akka.cluster.swissborg.{LithiumReachability, TestMember}
 import com.swissborg.lithium.reporter.SplitBrainReporter.{NodeIndirectlyConnected, NodeUnreachable}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -163,7 +163,7 @@ class ReachabilityReporterStateSuite extends AnyWordSpec with Matchers {
 
       val getEvents = for {
         _ <- ReachabilityReporterState.withReachability(
-          MockedLithiumReachability(Set(aa), Map(bb -> Set(aa), cc -> Set(aa)))
+          LithiumReachability(Set(aa), Map(bb -> Set(aa), cc -> Set(aa)))
         )
         _      <- ReachabilityReporterState.withSeenBy(Set(aa.address))
         events <- ReachabilityReporterState.withSeenBy(Set(aa.address, cc.address))
@@ -187,9 +187,9 @@ class ReachabilityReporterStateSuite extends AnyWordSpec with Matchers {
 
       val getEvents = for {
         _ <- ReachabilityReporterState.withSeenBy(Set(aa.address, cc.address))
-        _ <- ReachabilityReporterState.withReachability(MockedLithiumReachability(Set(aa), Map(cc -> Set(aa))))
+        _ <- ReachabilityReporterState.withReachability(LithiumReachability(Set(aa), Map(cc -> Set(aa))))
         events <- ReachabilityReporterState.withReachability(
-          MockedLithiumReachability(Set(aa), Map(bb -> Set(aa), cc -> Set(aa)))
+          LithiumReachability(Set(aa), Map(bb -> Set(aa), cc -> Set(aa)))
         )
       } yield events
 
