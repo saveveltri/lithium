@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package akka.cluster.swissborg.proto;
+
+import "common.proto";
+
+message NodeReachableProto {
+    UniqueAddressProto node = 1;
+}
+
+message NodeIndirectlyConnectedProto {
+    UniqueAddressProto node = 1;
+}
+
+message NodeUnreachableProto {
+    UniqueAddressProto node = 1;
+}

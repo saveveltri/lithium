@@ -2,10 +2,7 @@ syntax = "proto3";
 
 package akka.cluster.swissborg.proto;
 
-message UniqueAddressProto{
-    bytes address = 1;
-    int64 uid = 2;
-}
+import "common.proto";
 
 message LithiumAddressEnvelope {
     UniqueAddressProto addressKey = 1;
@@ -54,16 +51,4 @@ message LithiumReachabilityChangedProto {
         LithiumReachabilityFromAkkaProto lithiumReachabilityFromAkka = 1;
         LithiumReachabilityFromNodesProto lithiumReachabilityFromNodes = 2;
     }
-}
-
-message NodeReachableProto {
-    UniqueAddressProto node = 1;
-}
-
-message NodeIndirectlyConnectedProto {
-    UniqueAddressProto node = 1;
-}
-
-message NodeUnreachableProto {
-    UniqueAddressProto node = 1;
 }

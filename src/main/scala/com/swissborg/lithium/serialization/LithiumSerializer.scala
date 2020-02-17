@@ -2,7 +2,7 @@ package com.swissborg.lithium.serialization
 
 import akka.actor.Address
 import akka.cluster.UniqueAddress
-import akka.cluster.swissborg.proto.lithium.UniqueAddressProto
+import akka.cluster.swissborg.proto.common.UniqueAddressProto
 import akka.serialization.{Serialization, SerializerWithStringManifest, Serializers}
 import com.google.protobuf.ByteString
 
