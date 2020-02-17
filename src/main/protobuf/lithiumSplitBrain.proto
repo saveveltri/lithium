@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package akka.cluster.swissborg.proto;
+
+import "common.proto";
+
+message IndirectlyConnectedNodeProto {
+    MemberProto member = 1;
+}
+
+message ReachableNodeProto {
+    MemberProto member = 1;
+}
+
+message UnreachableNodeProto {
+    MemberProto member = 1;
+}
+
+message NodeProtoWrapper {
+    oneof NodeProto {
+        IndirectlyConnectedNodeProto indirectlyConnectedNode = 1;
+        ReachableNodeProto reachableNodeProto = 2;
+        UnreachableNodeProto unreachableNodeProto = 3;
+    }
+}
+
+message WorldViewProto {
+    NodeProtoWrapper selfNode = 1;
+    repeated NodeProtoWrapper otherNodes = 2;
+}
+
+message ResolveSplitBrainProto {
+    WorldViewProto worldView = 1;
+}
+
+message DownAllProto {
+    WorldViewProto worldView = 1;
+}

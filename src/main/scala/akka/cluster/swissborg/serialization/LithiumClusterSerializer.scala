@@ -2,8 +2,8 @@ package akka.cluster.swissborg.serialization
 
 import akka.actor.ExtendedActorSystem
 import akka.cluster.Reachability.Record
-import akka.cluster.swissborg.proto.lithium.LithiumReachabilityChangedProto.LithiumReachabilityProto
-import akka.cluster.swissborg.proto.lithium._
+import akka.cluster.swissborg.proto.lithiumCluster.LithiumReachabilityChangedProto.LithiumReachabilityProto
+import akka.cluster.swissborg.proto.lithiumCluster._
 import akka.cluster.swissborg.{LithiumReachability, LithiumReachabilityFromAkka, LithiumReachabilityFromNodes}
 import akka.cluster.{Reachability, UniqueAddress}
 import akka.serialization.{Serialization, SerializationExtension}

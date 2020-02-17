@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package akka.cluster.swissborg.proto;
+
+message UniqueAddressProto {
+    bytes address = 1;
+    int64 uid = 2;
+}
+
+message MemberProto {
+    UniqueAddressProto addressIndex = 1;
+    int32 upNumber = 2;
+    MemberStatusProto status = 3;
+    repeated int32 rolesIndexes = 4 [packed = true];
+}
+
+enum MemberStatusProto {
+    Joining = 0;
+    Up = 1;
+    Leaving = 2;
+    Exiting = 3;
+    Down = 4;
+    Removed = 5;
+    WeaklyUp = 6;
+}

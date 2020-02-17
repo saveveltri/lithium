@@ -1,7 +1,7 @@
 package com.swissborg.lithium.serialization
 
 import akka.actor.ExtendedActorSystem
-import akka.cluster.swissborg.proto.lithium._
+import akka.cluster.swissborg.proto.lithiumReachability._
 import akka.serialization.{Serialization, SerializationExtension}
 import com.swissborg.lithium.reporter.SplitBrainReporter.{NodeIndirectlyConnected, NodeReachable, NodeUnreachable}
 
