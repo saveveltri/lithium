@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.cluster.ClusterEvent.{ReachabilityChanged, SeenChanged}
 import akka.cluster.Reachability
 import akka.testkit.{ImplicitSender, TestKit, TestProbe}
-import com.swissborg.lithium.internals.{LithiumReachabilityChanged, LithiumSeenChanged}
+import com.swissborg.lithium.{LithiumReachabilityChanged, LithiumSeenChanged}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.wordspec.AnyWordSpecLike
 
