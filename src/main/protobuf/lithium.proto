@@ -2,18 +2,37 @@ syntax = "proto3";
 
 package akka.cluster.swissborg.proto;
 
+message UniqueAddressProto{
+    bytes address = 1;
+    int64 uid = 2;
+}
+
 message LithiumAddressEnvelope {
-    bytes addressKey = 1;
-    repeated bytes addressValues = 2;
+    UniqueAddressProto addressKey = 1;
+    repeated UniqueAddressProto addressValues = 2;
 }
 
-message LithiumReachabilityFromAkkaProto {
-    bytes reachability = 1;
+enum ReachabilityStatusProto {
+    Reachable = 0;
+    Unreachable = 1;
+    Terminated = 2;
 }
 
-message LithiumReachabilityFromNodesProto{
-    repeated bytes reachableNodes = 1;
-    repeated LithiumAddressEnvelope observersGroupedByUnreachableIn = 2;
+message RecordProto {
+    UniqueAddressProto observer = 1;
+    UniqueAddressProto subject = 2;
+    ReachabilityStatusProto status = 3;
+    int64 version = 4;
+}
+
+message UniqueAddressVersionEnvelope {
+    UniqueAddressProto address = 1;
+    int64 version = 2;
+}
+
+message AkkaReachabilityProto {
+    repeated RecordProto records = 1;
+    repeated UniqueAddressVersionEnvelope versions = 2;
 }
 
 message LithiumSeenChangedProto {
@@ -21,9 +40,30 @@ message LithiumSeenChangedProto {
     repeated bytes seenBy = 2;
 }
 
-message LithiumReachabilityChanged {
-    oneof LithiumReachability {
-        LithiumReachabilityFromAkkaProto lithiumReachabilityFromAkkaProto = 1;
-        LithiumReachabilityFromNodesProto lithiumReachabilityFromNodesProto = 2;
+message LithiumReachabilityFromAkkaProto {
+    AkkaReachabilityProto reachability = 1;
+}
+
+message LithiumReachabilityFromNodesProto{
+    repeated UniqueAddressProto reachableNodes = 1;
+    repeated LithiumAddressEnvelope observersGroupedByUnreachableIn = 2;
+}
+
+message LithiumReachabilityChangedProto {
+    oneof lithiumReachabilityProto {
+        LithiumReachabilityFromAkkaProto lithiumReachabilityFromAkka = 1;
+        LithiumReachabilityFromNodesProto lithiumReachabilityFromNodes = 2;
     }
+}
+
+message NodeReachableProto {
+    UniqueAddressProto node = 1;
+}
+
+message NodeIndirectlyConnectedProto {
+    UniqueAddressProto node = 1;
+}
+
+message NodeUnreachableProto {
+    UniqueAddressProto node = 1;
 }

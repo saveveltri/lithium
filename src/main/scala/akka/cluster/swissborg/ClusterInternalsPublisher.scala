@@ -2,7 +2,7 @@ package akka.cluster.swissborg
 
 import akka.actor.{Actor, Props}
 import akka.cluster.ClusterEvent.{ReachabilityChanged, SeenChanged}
-import com.swissborg.lithium.internals._
+import com.swissborg.lithium._
 
 /**
  * Actor making the [[SeenChanged]] and [[ReachabilityChanged]] event streams
