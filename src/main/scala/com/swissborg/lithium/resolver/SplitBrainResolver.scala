@@ -138,10 +138,10 @@ object SplitBrainResolver {
             trackIndirectlyConnectedNodes: Boolean): Props =
     Props(new SplitBrainResolver(strategy, stableAfter, downAllWhenUnstable, trackIndirectlyConnectedNodes))
 
-  sealed private[lithium] trait Event
+  sealed trait Event
 
   final private[lithium] case class ResolveSplitBrain(worldView: WorldView) extends Event
 
-  final private[lithium] case class DownAll(worldView: WorldView) extends Event
+  final case class DownAll(worldView: WorldView) extends Event
 
 }

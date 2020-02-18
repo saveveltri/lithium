@@ -9,7 +9,7 @@ import cats.implicits._
  * Wrapper around a member adding the reachability information
  * on top of it.
  */
-sealed abstract private[lithium] class Node extends Product with Serializable {
+sealed abstract class Node extends Product with Serializable {
   val member: Member
 
   val status: MemberStatus         = member.status
@@ -59,7 +59,7 @@ final private[lithium] case class UnreachableNode(member: Member) extends NonInd
   override def copyMember(member: Member): Node = copy(member = member)
 }
 
-private[lithium] object UnreachableNode {
+object UnreachableNode {
   implicit val unreachableNodeOrdering: Ordering[UnreachableNode] = Ordering.by(_.member)
   implicit val unreachableNodeOrder: Order[UnreachableNode]       = Order.fromOrdering
   implicit val unreachableNodeShow: Show[UnreachableNode]         = Show[Node].contramap(identity)
@@ -68,11 +68,11 @@ private[lithium] object UnreachableNode {
 /**
  * A cluster nodes that can be reached by all its observers.
  */
-final private[lithium] case class ReachableNode(member: Member) extends NonIndirectlyConnectedNode {
+final case class ReachableNode(member: Member) extends NonIndirectlyConnectedNode {
   override def copyMember(member: Member): Node = copy(member = member)
 }
 
-private[lithium] object ReachableNode {
+object ReachableNode {
   implicit val reachableNodeOrdering: Ordering[ReachableNode] = Ordering.by(_.member)
   implicit val reachableNodeOrder: Order[ReachableNode]       = Order.fromOrdering
   implicit val reachableNodeShow: Show[ReachableNode]         = Show[Node].contramap(identity)
@@ -81,7 +81,7 @@ private[lithium] object ReachableNode {
 /**
  * A cluster node that can be reached by only a part of its observers.
  */
-final private[lithium] case class IndirectlyConnectedNode(member: Member) extends Node {
+final case class IndirectlyConnectedNode(member: Member) extends Node {
   override def copyMember(member: Member): Node = copy(member = member)
 }
 

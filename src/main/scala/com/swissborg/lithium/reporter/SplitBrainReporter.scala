@@ -224,7 +224,7 @@ private[lithium] class SplitBrainReporter(private val splitBrainResolver: ActorR
   }
 }
 
-private[lithium] object SplitBrainReporter {
+object SplitBrainReporter {
   private type F[A] = StateT[SyncIO, SplitBrainReporterState, A]
 
   val nonFullyFledgedMemberStatus: Set[MemberStatus]       = Set(Joining, WeaklyUp)
