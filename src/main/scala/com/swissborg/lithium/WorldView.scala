@@ -22,19 +22,19 @@ import scala.collection.immutable.SortedSet
  * Only contains nodes in the same data-center as the `selfNode`.
  * As a result, partitions between data-centers are not handled.
  */
-final private[lithium] case class WorldView private (selfUniqueAddress: UniqueAddress,
-                                                     selfStatus: SelfStatus,
-                                                     /**
-                                                      * The ordering on nodes is defined on their unique address,
-                                                      * ignoring for instance the status.
-                                                      * As a result, it cannot contain duplicate nodes.
-                                                      *
-                                                      * Care needs need to be taken when replacing a node with one where
-                                                      * the status changed in the set. First it has it to be removed and
-                                                      * then added. Only adding it will not override the value as they
-                                                      * are equal given the ordering.
-                                                      */
-                                                     otherMembersStatus: Map[UniqueAddress, OtherStatus]) {
+final case class WorldView private (selfUniqueAddress: UniqueAddress,
+                                    selfStatus: SelfStatus,
+                                    /**
+                                     * The ordering on nodes is defined on their unique address,
+                                     * ignoring for instance the status.
+                                     * As a result, it cannot contain duplicate nodes.
+                                     *
+                                     * Care needs need to be taken when replacing a node with one where
+                                     * the status changed in the set. First it has it to be removed and
+                                     * then added. Only adding it will not override the value as they
+                                     * are equal given the ordering.
+                                     */
+                                    otherMembersStatus: Map[UniqueAddress, OtherStatus]) {
   import WorldView._
 
   assert(
@@ -224,7 +224,7 @@ final private[lithium] case class WorldView private (selfUniqueAddress: UniqueAd
   )
 }
 
-private[lithium] object WorldView {
+object WorldView {
   final case class Simple(selfUniqueAddress: UniqueAddress,
                           reachableMembers: List[SimpleMember],
                           indirectlyConnectedMembers: List[SimpleMember],
@@ -286,7 +286,6 @@ private[lithium] object WorldView {
   /**
    * Build a world view based on the given nodes.
    *
-   * Used in tests.
    */
   def fromNodes(selfNode: Node, otherNodes: SortedSet[Node]): WorldView = {
     val sameDCOtherNodes = otherNodes.filter(_.member.dataCenter == selfNode.member.dataCenter)

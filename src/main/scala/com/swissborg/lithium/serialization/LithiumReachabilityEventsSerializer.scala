@@ -3,7 +3,12 @@ package com.swissborg.lithium.serialization
 import akka.actor.ExtendedActorSystem
 import akka.cluster.swissborg.proto.lithiumReachability._
 import akka.serialization.{Serialization, SerializationExtension}
-import com.swissborg.lithium.reporter.SplitBrainReporter.{NodeIndirectlyConnected, NodeReachable, NodeUnreachable}
+import com.swissborg.lithium.reporter.SplitBrainReporter.{
+  NodeIndirectlyConnected,
+  NodeReachabilityEvent,
+  NodeReachable,
+  NodeUnreachable
+}
 
 import scala.reflect.ManifestFactory
 
@@ -12,11 +17,12 @@ import scala.reflect.ManifestFactory
 )
 final class LithiumReachabilityEventsSerializer(val extendedSystem: ExtendedActorSystem) extends LithiumSerializer {
 
-  override def identifier: Int = 130000
+  override def identifier: Int = 140000
 
   override protected lazy val serializationExtension: Serialization = SerializationExtension(extendedSystem)
 
-  private lazy val NodeReachableManifest = ManifestFactory.classType(classOf[NodeReachable]).toString()
+  private lazy val NodeReachablityEventManifest = ManifestFactory.classType(classOf[NodeReachabilityEvent]).toString()
+  private lazy val NodeReachableManifest        = ManifestFactory.classType(classOf[NodeReachable]).toString()
   private lazy val NodeIndirectlyConnectedManifest =
     ManifestFactory.classType(classOf[NodeIndirectlyConnected]).toString()
   private lazy val NodeUnreachableManifest = ManifestFactory.classType(classOf[NodeUnreachable]).toString()
@@ -25,6 +31,7 @@ final class LithiumReachabilityEventsSerializer(val extendedSystem: ExtendedActo
     case _: NodeReachable           => NodeReachableManifest
     case _: NodeIndirectlyConnected => NodeIndirectlyConnectedManifest
     case _: NodeUnreachable         => NodeUnreachableManifest
+    case _: NodeReachabilityEvent   => NodeReachablityEventManifest
     case _ =>
       throw new IllegalArgumentException(s"Can't serialize object of type ${o.getClass} in [${getClass.getName}]")
   }

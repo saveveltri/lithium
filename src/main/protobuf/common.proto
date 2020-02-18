@@ -8,10 +8,10 @@ message UniqueAddressProto {
 }
 
 message MemberProto {
-    UniqueAddressProto addressIndex = 1;
+    UniqueAddressProto address = 1;
     int32 upNumber = 2;
     MemberStatusProto status = 3;
-    repeated int32 rolesIndexes = 4 [packed = true];
+    repeated string roles = 4;
 }
 
 enum MemberStatusProto {

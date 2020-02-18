@@ -117,13 +117,13 @@ object SplitBrainResolver {
             trackIndirectlyConnectedNodes: Boolean): Props =
     Props(new SplitBrainResolver(strategy, stableAfter, downAllWhenUnstable, trackIndirectlyConnectedNodes))
 
-  sealed private[lithium] trait Event
+  sealed trait Event
 
-  final private[lithium] case class ResolveSplitBrain(worldView: WorldView) extends Event {
+  final case class ResolveSplitBrain(worldView: WorldView) extends Event {
     lazy val simple: ResolveSplitBrain.Simple = ResolveSplitBrain.Simple(worldView.simple)
   }
 
-  private[lithium] object ResolveSplitBrain {
+  object ResolveSplitBrain {
 
     final case class Simple(worldView: WorldView.Simple)
 
@@ -133,6 +133,6 @@ object SplitBrainResolver {
 
   }
 
-  final private[lithium] case class DownAll(worldView: WorldView) extends Event
+  final case class DownAll(worldView: WorldView) extends Event
 
 }
