@@ -84,7 +84,7 @@ final class LithiumSplitBrainEventsSerializer(val extendedSystem: ExtendedActorS
 
   private def serializeWorldView(worldView: WorldView): WorldViewProto =
     WorldViewProto(Some(serializeNode(worldView.selfNode)),
-                   (worldView.nodes - worldView.selfNode).unsorted.map(serializeNode).toSeq)
+                   (worldView.nodes - worldView.selfNode).toSet.map(serializeNode).toSeq)
 
   private def deserializeWorldView(worldViewProto: WorldViewProto) =
     WorldView.fromNodes(deserializeNode(worldViewProto.selfNode.get),

@@ -50,7 +50,7 @@ private[lithium] object NonIndirectlyConnectedNode {
 /**
  * A cluster node that cannot be reached from any of its observers.
  */
-final private[lithium] case class UnreachableNode(member: Member) extends NonIndirectlyConnectedNode {
+final case class UnreachableNode(member: Member) extends NonIndirectlyConnectedNode {
   override def copyMember(member: Member): Node = copy(member = member)
 }
 

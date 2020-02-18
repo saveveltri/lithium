@@ -10,6 +10,8 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
+import scala.collection.immutable
+
 class LithiumClusterSerializerSpec
     extends TestKit(ActorSystem("lithium"))
     with AnyWordSpecLike
@@ -53,7 +55,7 @@ class LithiumClusterSerializerSpec
 
     "be serializable for lithium reachability built from akka reachability" in {
 
-      val records = IndexedSeq(
+      val records = immutable.IndexedSeq(
         Record(uniqueAddress, uniqueAddress2, Reachability.Reachable, 1),
         Record(uniqueAddress, uniqueAddress2, Reachability.Unreachable, 2),
         Record(uniqueAddress2, uniqueAddress, Reachability.Terminated, 3)
