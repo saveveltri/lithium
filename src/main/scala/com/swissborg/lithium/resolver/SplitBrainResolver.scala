@@ -140,7 +140,7 @@ object SplitBrainResolver {
 
   sealed trait Event
 
-  final private[lithium] case class ResolveSplitBrain(worldView: WorldView) extends Event
+  final case class ResolveSplitBrain(worldView: WorldView) extends Event
 
   final case class DownAll(worldView: WorldView) extends Event
 

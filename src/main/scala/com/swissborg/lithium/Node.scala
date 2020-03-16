@@ -85,7 +85,7 @@ final case class IndirectlyConnectedNode(member: Member) extends Node {
   override def copyMember(member: Member): Node = copy(member = member)
 }
 
-private[lithium] object IndirectlyConnectedNode {
+object IndirectlyConnectedNode {
   implicit val indirectlyConnectedNodeOrdering: Ordering[IndirectlyConnectedNode] = Ordering.by(_.member)
   implicit val indirectlyConnectedNodeOrder: Order[IndirectlyConnectedNode]       = Order.fromOrdering
   implicit val indirectlyConnectedNodeShow: Show[IndirectlyConnectedNode]         = Show[Node].contramap(identity)
