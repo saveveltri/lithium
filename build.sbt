@@ -101,6 +101,11 @@ libraryDependencies ++= Seq(
   "com.github.alexarchambault" %% "scalacheck-shapeless_1.14" % scalacheckShapelessVersion % Test
 )
 
+//protobuf
+libraryDependencies ++= Seq(
+  "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf"
+)
+
 addCompilerPlugin(("org.typelevel" % "kind-projector" % kindProjectorVersion).cross(CrossVersion.full))
 
 addCompilerPlugin("com.olegpy" %% "better-monadic-for" % betterMonadicForVersion)
@@ -111,6 +116,9 @@ lazy val root = (project in file("."))
   .settings(multiJvmSettings: _*)
   .settings(parallelExecution in Test := false)
   .settings(crossScalaVersions := supportedScalaVersions)
+  .settings(PB.targets in Compile := Seq(
+    scalapb.gen() -> (sourceManaged in Compile).value
+  ))
   .settings(publishSettings)
 
 scalafmtOnCompile := true
