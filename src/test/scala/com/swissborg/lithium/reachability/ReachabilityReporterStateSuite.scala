@@ -7,12 +7,11 @@ import akka.cluster.ClusterEvent.CurrentClusterState
 import akka.cluster.MemberStatus.Up
 import akka.cluster.UniqueAddress
 import akka.cluster.swissborg.{LithiumReachability, TestMember}
-import cats.implicits._
 import com.swissborg.lithium.reporter.SplitBrainReporter.{NodeIndirectlyConnected, NodeUnreachable}
-
-import scala.collection.immutable.SortedSet
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+
+import scala.collection.immutable.SortedSet
 
 class ReachabilityReporterStateSuite extends AnyWordSpec with Matchers {
   private val defaultDc = "dc-default"
@@ -163,7 +162,9 @@ class ReachabilityReporterStateSuite extends AnyWordSpec with Matchers {
       val ccMember = TestMember.withUniqueAddress(cc, Up, Set.empty, defaultDc)
 
       val getEvents = for {
-        _      <- ReachabilityReporterState.withReachability(LithiumReachability(Set(aa), Map(bb -> Set(aa), cc -> Set(aa))))
+        _ <- ReachabilityReporterState.withReachability(
+          LithiumReachability(Set(aa), Map(bb -> Set(aa), cc -> Set(aa)))
+        )
         _      <- ReachabilityReporterState.withSeenBy(Set(aa.address))
         events <- ReachabilityReporterState.withSeenBy(Set(aa.address, cc.address))
       } yield events
