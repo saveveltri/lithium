@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package akka.cluster.swissborg.proto;
+
+message LithiumAddressEnvelope {
+    bytes addressKey = 1;
+    repeated bytes addressValues = 2;
+}
+
+message LithiumReachabilityFromAkkaProto {
+    bytes reachability = 1;
+}
+
+message LithiumReachabilityFromNodesProto{
+    repeated bytes reachableNodes = 1;
+    repeated LithiumAddressEnvelope observersGroupedByUnreachableIn = 2;
+}
+
+message LithiumSeenChangedProto {
+    bool convergence = 1;
+    repeated bytes seenBy = 2;
+}
+
+message LithiumReachabilityChanged {
+    oneof LithiumReachability {
+        LithiumReachabilityFromAkkaProto lithiumReachabilityFromAkkaProto = 1;
+        LithiumReachabilityFromNodesProto lithiumReachabilityFromNodesProto = 2;
+    }
+}
